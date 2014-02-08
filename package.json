@@ -1,0 +1,9 @@
+{
+	"name": "nodeExample",
+	"version": "0.0.1",
+	"description": "nodeExample",
+	"dependencies": {
+        "socket.io": "latest"
+    },
+	"author": "dev"
+}

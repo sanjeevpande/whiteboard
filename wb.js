@@ -1,12 +1,14 @@
-$(document).ready(function(){
+
 
     var c = document.getElementById("board"),
         ctx = c.getContext("2d"),
         start = false,
         write = false,
         erase = false,
-        prevX,
-        prevY;
+        data = {
+            prevX : 0,
+            prevY : 0
+        };
         
     ctx.lineWidth = 8;
     ctx.lineJoin = 'round';
@@ -28,8 +30,8 @@ $(document).ready(function(){
 
     $(document).on('mousedown',function(event){
 
-        prevX = event.offsetX;
-        prevY = event.offsetY;
+        data.prevX = event.offsetX;
+        data.prevY = event.offsetY;
         ctx.beginPath();
         start = true;
 
@@ -48,7 +50,7 @@ $(document).ready(function(){
         
             //console.log("X: " + event.clientX + "    Y: " + event.clientY);
      
-            ctx.moveTo(prevX,prevY);
+            ctx.moveTo(data.prevX, data.prevY);
             ctx.lineTo(event.offsetX,event.offsetY);
 
             if(erase){
@@ -60,10 +62,12 @@ $(document).ready(function(){
                 ctx.lineWidth = 8;
             }
             
-            prevX = event.offsetX;
-            prevY = event.offsetY;
+            data.prevX = event.offsetX;
+            data.prevY = event.offsetY;
+
+            sendData("1");
+
             ctx.stroke(); 
         }
   
     });
-});
