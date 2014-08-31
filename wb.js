@@ -6,7 +6,8 @@ var c = document.getElementById("board"),
         data = {
             prevX : 0,
             prevY : 0
-        };
+        },
+        socket = io.connect();
         
     ctx.lineWidth = 8;
     ctx.lineJoin = 'round';
@@ -46,26 +47,38 @@ var c = document.getElementById("board"),
         
         if(start && (write || erase)){
         
-            //console.log("X: " + event.clientX + "    Y: " + event.clientY);
-     
-            ctx.moveTo(data.prevX, data.prevY);
-            ctx.lineTo(event.offsetX,event.offsetY);
-
-            if(erase){
-                ctx.strokeStyle = '#FFFFFF';
-                ctx.lineWidth = 30;    
-            }
-            else if(write){
-                ctx.strokeStyle = '#000000';   
-                ctx.lineWidth = 8;
-            }
+            var mousePos = {
+                posX : event.offsetX,
+                posY : event.offsetY
+            };
             
-            data.prevX = event.offsetX;
-            data.prevY = event.offsetY;
-
-            //sendData("1");
-
-            ctx.stroke(); 
+            socket.emit('move', mousePos);
         }
   
+    });
+
+    function draw(mousePos){
+
+        ctx.moveTo(data.prevX, data.prevY);
+        ctx.lineTo(mousePos.posX,mousePos.posY);
+
+        if(erase){
+            ctx.strokeStyle = '#FFFFFF';
+            ctx.lineWidth = 30;    
+        }
+        else if(write){
+            ctx.strokeStyle = '#000000';   
+            ctx.lineWidth = 8;
+        }
+        
+        data.prevX = mousePos.posX;
+        data.prevY = mousePos.posY;
+
+        ctx.stroke(); 
+    }
+
+    socket.on('draw', function(mousePos){
+    
+        draw(mousePos);
+
     });
