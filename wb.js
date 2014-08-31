@@ -1,6 +1,4 @@
-
-
-    var c = document.getElementById("board"),
+var c = document.getElementById("board"),
         ctx = c.getContext("2d"),
         start = false,
         write = false,
@@ -65,7 +63,7 @@
             data.prevX = event.offsetX;
             data.prevY = event.offsetY;
 
-            sendData("1");
+            //sendData("1");
 
             ctx.stroke(); 
         }

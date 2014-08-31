@@ -23,6 +23,11 @@ var handler = function(req, res) {
         res.writeHead(200, {'Content-Type': 'text/javascript' });
         res.end(img, 'binary');
     }
+    else if (action == '/wb.js') {
+        var img = fs.readFileSync('./wb.js');
+        res.writeHead(200, {'Content-Type': 'text/javascript' });
+        res.end(img, 'binary');
+    }
     else if (action == '/wb.css') {
         var img = fs.readFileSync('./wb.css');
         res.writeHead(200, {'Content-Type': 'text/css' });
